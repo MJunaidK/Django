@@ -1,0 +1,6 @@
+<form method="post">
+  {% csrf_token %}
+  <p>Are you sure you want to delete "{{ item.item_name }}"?</p>
+  <button type="submit">Yes, delete</button>
+  <a href="{% url 'myapp:detail' item.id %}">Cancel</a>
+</form>

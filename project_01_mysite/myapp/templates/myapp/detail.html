@@ -1,0 +1,27 @@
+{% extends "myapp/base.html" %} {% block body %}
+<div class="m-10 flex w-1/2 mx-auto">
+  <div>
+    <img class="w-64 rounded-lg" src="{{item.item_image}}" />
+  </div>
+  <div class="mx-16 space-y-5">
+    <div class="font-bold text-2xl">{{ item.item_name }}</div>
+    <div class="text-gree-700 font-bold text-2xl">{{item.item_price}}</div>
+    <div class="mt-4">{{ item.item_desc }}</div>
+    <div>
+      <a
+        href="{% url 'myapp:update_item' item.id %}"
+        class="bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-4"
+        >Edit</a
+      >
+      <a
+        href="{% url 'myapp:delete_item' item.id %}"
+        class="bg-green-500 text-white font-bold px-4 py-2 rounded-md mt-4"
+        >Delete</a
+      >
+    </div>
+    <!-- <h1>{{ item.item_name }}</h1> -->
+    <!-- <h1>{{ item.item_desc }}</h1> -->
+    <!-- <h1>Price: ${{ item.item_price }}</h1> -->
+  </div>
+</div>
+{% endblock %}
