@@ -1,0 +1,6 @@
+<h1>{{user.username}}</h1>
+<img
+  src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}https://via.placeholder.com/150{% endif %}"
+  alt="Profile Picture"
+  class="w-32 h-32 rounded-full object-cover"
+/>
