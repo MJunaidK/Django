@@ -1,15 +1,20 @@
 {% extends "myapp/base.html" %} {% block body %}
+{% load cache %}
+{% load custom_filters %}
 <div>
-  {% for item in item_list %}
+  {% cache 300 item_list_cache page_obj.number %}
+  {% for item in page_obj %}
   <div class="m-10 flex w-1/2 mx-auto">
     <div>
       <img class="w-64 rounded-lg" src="{{item.item_image}}" />
     </div>
     <div class="mx-16">
-      <div class="font-bold">{{ item.item_name }}</div>
-      <div>{{ item.item_desc }}</div>
+      <div class="font-bold">{{ item.item_name | title }}</div>
+      <div>{{ item.item_desc | lower | truncatechars:30}}</div>
       <div>{{ item.user }}</div>
-      <div class="font-bold mt-2 text-blue-600">${{ item.item_price }}</div>
+      <div>{{ item.created_at | date:"M d, Y" }}</div>
+      <div class="font-bold mt-2 text-blue-600">{{ item.item_price|add:"50"|floatformat:2|currency }}</div>
+      <div> Discount: {{ item.item_price|discount:"10"|floatformat:2|currency }}</div>
     </div>
     <div class="mt-4">
       <a
@@ -18,8 +23,32 @@
         >View Details</a
       >
     </div>
-    </div>
-    {% endfor %}
   </div>
+  {% endfor %}
+  {% endcache  %}
+</div>
   {% endblock %}
 </div>
+<div class="pagination flex justify-center space-x-4 my-8">
+  {% if page_obj.has_previous %}
+  <a
+    href="?page={{ page_obj.previous_page_number }}"
+    class="bg-blue-500 text-white px-4 py-2 rounded-md"
+    >Previous</a
+  > 
+  {% endif %} {% for num in page_obj.paginator.page_range %}
+  {% if page_obj.number == num %}
+  <span class="px-4 py-2 bg-gray-300 rounded-md">{{ num }}</span>
+  {% else %}
+  <a
+    href="?page={{ num }}"
+    class="bg-blue-500 text-white px-4 py-2 rounded-md"
+    >{{ num }}</a
+  >
+  {% endif %} {% endfor %} {% if page_obj.has_next %}
+  <a
+    href="?page={{ page_obj.next_page_number }}"
+    class="bg-blue-500 text-white px-4 py-2 rounded-md"
+    >Next</a
+  >
+  {% endif %}
