@@ -1,0 +1,28 @@
+<form method="get">
+  <input
+    type="text"
+    name="search"
+    placeholder="Search movies..."
+    value="{{ request.GET.search }}"
+  />
+  <button type="submit">Search</button>
+</form>
+{% for movie in movie_objects %}
+<p>{{ movie.name }} - Rating: {{ movie.rating }}</p>
+{% empty %}
+<p>No movies available.</p>
+{% endfor %} {% if movie_objects.has_other_pages %}
+<div class="pagination">
+  {% if movie_objects.has_previous %}
+  <a href="?page={{ movie_objects.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span
+    >Page {{ movie_objects.number }} of {{ movie_objects.paginator.num_pages }}
+  </span>
+
+  {% if movie_objects.has_next %}
+  <a href="?page={{ movie_objects.next_page_number }}">Next</a>
+  {% endif %}
+</div>
+{% endif %}
