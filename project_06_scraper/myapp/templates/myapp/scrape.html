@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="url">Enter URL to Scrape:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="url"
+                name="url"
+                placeholder="https://example.com"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Scrape</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <h1>Scraped Links</h1>
+    <ul>
+      {% for link in data %} {{link.name}}: {{link.address}}
+      <br />
+      {% endfor %}
+    </ul>
+  </body>
+</html>
