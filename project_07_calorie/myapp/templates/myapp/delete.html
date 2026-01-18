@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form method="post" action="">
+      {% csrf_token %}
+      <p>Are you sure you want to delete "{{ consume.food_consumed.name }}"?</p>
+      <button type="submit">Confirm Delete</button>
+    </form>
+  </body>
+</html>
