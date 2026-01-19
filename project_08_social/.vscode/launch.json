@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python Debugger: Django (project_08_social)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/project_08_social/manage.py",
+      "args": ["runserver"],
+      "django": true,
+      "cwd": "${workspaceFolder}/project_08_social",
+      "autoStartBrowser": false
+    }
+  ]
+}

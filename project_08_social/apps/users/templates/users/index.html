@@ -1,0 +1,17 @@
+{% extends 'users/base.html'%} {% block body%}
+<h1>Home Page for users app</h1>
+{% for post in posts %}
+<div>
+  <h3>{{ post.title }}</h3>
+  <h3>{{ post.user }}</h3>
+  <img
+    src="{{ post.image.url }}"
+    alt="{{ post.title }}"
+    style="max-width: 300px; max-height: 300px"
+  />
+  <p>{{ post.content }}</p>
+  <small>Posted on: {{ post.created_at }}</small>
+</div>
+{% empty %}
+<p>No posts available.</p>
+{% endfor %} {% endblock %}
