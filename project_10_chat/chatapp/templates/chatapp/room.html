@@ -1,0 +1,57 @@
+<h2>Room: {{ room.name }}</h2>
+
+<div
+  id="chat-log"
+  style="
+    border: 1px solid #000;
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+  "
+></div>
+
+<form id="chat-form" method="post">
+  {% csrf_token %}
+  <input
+    id="chat-message-input"
+    type="text"
+    size="80"
+    autocomplete="off"
+    placeholder="Type your message here..."
+  />
+  <input id="chat-message-submit" type="submit" value="Send" />
+</form>
+
+{{ room.slug|json_script:"room-slug" }} {{ username|json_script:"username" }}
+
+<script>
+  const chatRoomName = JSON.parse(
+    document.getElementById('room-slug').textContent,
+  );
+  const username = JSON.parse(document.getElementById('username').textContent);
+
+  const chatSocket = new WebSocket(
+    'ws://' + window.location.host + '/ws/' + chatRoomName + '/',
+  );
+
+  chatSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    const chatLog = document.getElementById('chat-log');
+    const el = document.createElement('div');
+    el.innerText = data.username + ': ' + data.message;
+    chatLog.appendChild(el);
+  };
+
+  chatSocket.onclose = function (e) {
+    console.error('Chat socket closed unexpectedly');
+  };
+
+  document.getElementById('chat-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const input = document.getElementById('chat-message-input');
+    const message = input.value;
+    if (!message.trim()) return;
+    chatSocket.send(JSON.stringify({ message: message, username: username }));
+    input.value = '';
+  });
+</script>
