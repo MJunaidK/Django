@@ -1,0 +1,5 @@
+{{product_form.as_p}}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <button type="submit">Create Product</button>
+</form>

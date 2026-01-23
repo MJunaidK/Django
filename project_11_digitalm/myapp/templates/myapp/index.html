@@ -1,0 +1,11 @@
+{% extends "myapp/base.html" %} {% block content %} This is the index page.
+<!-- Put your content here -->
+{% for product in products %}
+<div>
+  <h2>{{ product.name }}</h2>
+  `
+  <p>{{ product.description }}</p>
+  <p>Price: {{ product.price }}</p>
+  <a href="{% url 'detail' product.id %}">View Details</a>
+</div>
+{% endfor %} {% endblock %}
